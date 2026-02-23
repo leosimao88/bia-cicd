@@ -1,6 +1,5 @@
 FROM node:21
 
-RUN npm install -g npm@latest --loglevel=error
 WORKDIR /usr/src/app
 
 # Instalar dependências do servidor
