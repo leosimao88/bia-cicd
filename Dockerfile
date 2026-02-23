@@ -1,4 +1,6 @@
-FROM node:21
+FROM node:21-slim
+
+RUN npm install -g npm@latest --loglevel=error
 
 WORKDIR /usr/src/app
 
@@ -6,15 +8,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install --loglevel=error
 
-# Instalar dependências do client
-COPY client/package*.json ./client/
-RUN cd client && npm install
-
 # Copiar código
 COPY . .
 
-# Build do React com mais memória
-RUN cd client && NODE_OPTIONS="--max-old-space-size=2048" REACT_APP_API_URL="" SKIP_PREFLIGHT_CHECK=true npm run build
+# Build do React
+RUN SKIP_PREFLIGHT_CHECK=true npm run build --prefix client
 
 # Reorganizar arquivos
 RUN mv client/build build && rm -rf client/* && mv build client/
