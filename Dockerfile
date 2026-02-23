@@ -14,7 +14,7 @@ RUN cd client && npm install
 COPY . .
 
 # Build do React com mais memória
-RUN cd client && NODE_OPTIONS="--max-old-space-size=2048" REACT_APP_API_URL=http://localhost:3001 SKIP_PREFLIGHT_CHECK=true npm run build
+RUN cd client && NODE_OPTIONS="--max-old-space-size=2048" REACT_APP_API_URL="" SKIP_PREFLIGHT_CHECK=true npm run build
 
 # Reorganizar arquivos
 RUN mv client/build build && rm -rf client/* && mv build client/
